@@ -14,7 +14,6 @@ import {
 } from "@mui/x-data-grid";
 import { Button, Tooltip } from "@mui/material";
 import { PlusCircleIcon } from "lucide-react";
-import CreateIssueModal from "./CreateIssueModal";
 import CreateReceiptsModal from "./CreateReceiptsModal";
 import { useProductContext } from "@/app/(context)/ProductContext";
 import { useExchangeRate } from "../../(hooks)/useExchangeRate";
@@ -294,13 +293,7 @@ const Transactions = () => {
             <PlusCircleIcon className="mr-2" />
             Create Receipts
           </button>
-          <button
-            className="flex items-center bg-blue-500 hover:bg-blue-700 text-gray-200 font-bold py-2 px-4 rounded"
-            onClick={() => setIsIssueModalOpen(true)}
-          >
-            <PlusCircleIcon className="mr-2" />
-            Create Issue
-          </button>
+          
         </div>
       </div>
 
@@ -330,12 +323,6 @@ const Transactions = () => {
         </div>
       )}
 
-      <CreateIssueModal
-        isOpen={isIssueModalOpen}
-        onClose={() => setIsIssueModalOpen(false)}
-        onCreate={handleCreateIssue}
-       
-      />
       <CreateReceiptsModal
         isOpen={isReceiptsModalOpen}
         onClose={() => setIsReceiptsModalOpen(false)}
