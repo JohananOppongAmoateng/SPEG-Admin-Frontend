@@ -85,7 +85,6 @@ const Transactions = () => {
   const currentRate = EUR_GHS || FALLBACK_RATE;
   const { products, issueProduct, restockProduct } = useProductContext();
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
-  const [isIssueModalOpen, setIsIssueModalOpen] = useState(false);
   const [isReceiptsModalOpen, setIsReceiptsModalOpen] = useState(false);
   const [filterModel, setFilterModel] = useState<GridFilterModel>({ items: [] });
   const [salesFilterActive, setSalesFilterActive] = useState(false);
@@ -121,12 +120,6 @@ const Transactions = () => {
     setSelectedProduct(product || null);
   };
 
-  const handleCreateIssue = (issueData: any) => {
-    if (selectedProduct) {
-      issueProduct(selectedProduct._id, issueData);
-    }
-    setIsIssueModalOpen(false);
-  };
 
   const CustomToolbar = () => {
     return (
