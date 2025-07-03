@@ -137,6 +137,9 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
   // Delete a product by ID
   const deleteProduct = async (id: string) => {
+
+    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    if (!confirmDelete) return;
     try {
       await axiosInstance.delete(`/products/${id}`);
       setProducts((prev:any) => (prev ? prev.filter((p:any) => p._id !== id) : null));

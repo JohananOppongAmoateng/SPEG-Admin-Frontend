@@ -63,7 +63,7 @@ const Products = () => {
     useProductContext();
 
   const filteredProducts = useMemo(() => {
-    return products?.filter((product) =>
+    return products?.filter((product: Product) =>
       product.productName.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [products, searchTerm]);
