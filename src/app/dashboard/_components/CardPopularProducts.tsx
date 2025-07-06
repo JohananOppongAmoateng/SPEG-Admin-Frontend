@@ -2,7 +2,7 @@ import React from "react";
 import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 
-const Rating = ({ rating }) => {
+const Rating = ({ rating }: { rating: number }) => {
   return <span>{'⭐'.repeat(rating)}</span>;
 };
 

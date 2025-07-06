@@ -7,7 +7,7 @@ type ProductFormData = {
   productName: string;
   stockKeepingUnit: string;
   reOrderLevel: number;
-  sellingPrice: number;
+  sellingPrice?: number; // Optional for creating new products
 };
 
 type CreateProductModalProps = {
@@ -28,7 +28,7 @@ const CreateProductModal = ({
   const [formData, setFormData] = useState<ProductFormData>({
     productName: "",
     stockKeepingUnit: "",
-    reOrderLevel: 0,
+    reOrderLevel: 0
   });
 
   // Populate the form when editing an existing product
@@ -41,7 +41,7 @@ const CreateProductModal = ({
         sellingPrice: selectedProduct.sellingPrice,
       });
     } else {
-      setFormData({ productName: "", stockKeepingUnit: "", reOrderLevel: 0 });
+      setFormData({ productName: "", stockKeepingUnit: "", reOrderLevel: 0, sellingPrice: 0 });
     }
   }, [selectedProduct]);
 
