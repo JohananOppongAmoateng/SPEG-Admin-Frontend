@@ -10,7 +10,7 @@ import axiosInstance from "../../utils/axiosInstance"; // Ensure Axios is correc
 import toast from "react-hot-toast";
 
 type Product = {
-  _id: string;
+  id: string;
   productName: string;
   stockKeepingUnit: string;
   stockQuantity: number;
@@ -30,9 +30,9 @@ type stockData = {
 type ProductContextType = {
   products: any;
   getAllProducts: () => void;
-  addProduct: (product: Omit<Product, "_id">) => void;
+  addProduct: (product: Omit<Product, "id">) => void;
   getProductById: (id: string) => Promise<Product | null>;
-  updateProduct: (id: string, product: Omit<Product, "_id">) => void;
+  updateProduct: (id: string, product: Omit<Product, "id">) => void;
   deleteProduct: (id: string) => void;
   issueProduct: (id: string, quantity: number) => void;
   restockProduct: (id: string, stockData: stockData) => void;
@@ -68,7 +68,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // Add a new product
-  const addProduct = async (product: Omit<Product, "_id">) => {
+  const addProduct = async (product: Omit<Product, "id">) => {
     try {
       const response = await axiosInstance.post("/products/add", product);
       setProducts((prev:any) =>
@@ -108,7 +108,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   // Update a product by ID
   const updateProduct = async (
     id: string,
-    updatedProduct: Omit<Product, "_id">
+    updatedProduct: Omit<Product, "id">
   ) => {
     try {
       const response = await axiosInstance.patch(
@@ -117,7 +117,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       );
       setProducts((prev:any) =>
         prev
-          ? prev.map((p:any) => (p._id === id ? response.data.product : p))
+          ? prev.map((p:any) => (p.id === id ? response.data.product : p))
           : null
       );
       toast.success("Product Updated Successfully", {
@@ -142,7 +142,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     if (!confirmDelete) return;
     try {
       await axiosInstance.delete(`/products/${id}`);
-      setProducts((prev:any) => (prev ? prev.filter((p:any) => p._id !== id) : null));
+      setProducts((prev:any) => (prev ? prev.filter((p:any) => p.id !== id) : null));
       toast.success("Product Deleted Successfully", {
         style: {
           fontSize: "19px",
@@ -168,7 +168,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       setProducts((prev:any) =>
         prev
           ? prev.map((p:any) =>
-              p._id === id ? { ...p, ...response.data.product } : p
+              p.id === id ? { ...p, ...response.data.product } : p
             )
           : null
       );
@@ -200,7 +200,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       setProducts((prev:any) =>
         prev
           ? prev.map((p:any) =>
-              p._id === id ? { ...p, ...response.data.product } : p
+              p.id === id ? { ...p, ...response.data.product } : p
             )
           : null
       );

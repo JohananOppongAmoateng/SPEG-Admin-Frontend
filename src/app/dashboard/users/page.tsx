@@ -12,7 +12,7 @@ import axiosInstance from "@/utils/axiosInstance";
 
 const columns: GridColDef[] = [
     {
-        field: "_id",
+        field: "id",
         headerName: "ID",
         width: 100,
         renderCell: params =>
@@ -173,7 +173,7 @@ const Users = () => {
                 <DataGrid
                     rows={users}
                     columns={columns}
-                    getRowId={row => row._id}
+                    getRowId={row => row.id}
                     onRowClick={params => setSelectedUser(params.row)}
                     checkboxSelection
                     className="bg-white dark:bg-gray-800 shadow rounded-lg border dark:border-gray-700 mt-5 !text-gray-700 dark:!text-gray-300"

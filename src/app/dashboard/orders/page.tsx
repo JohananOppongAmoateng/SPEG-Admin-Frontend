@@ -14,7 +14,7 @@ import { Search } from 'lucide-react';
 import axiosInstance from '@/utils/axiosInstance';
 
 interface Order {
-  _id: string;
+  id: string;
   farmerId: {
     firstName: string;
     lastName: string;
@@ -60,7 +60,7 @@ const OrderList = () => {
       
       switch (searchType) {
         case 'orderId':
-          return order._id.toLowerCase().includes(searchLower);
+          return order.id.toLowerCase().includes(searchLower);
         case 'invoiceId':
           return order.invoiceId?.toLowerCase().includes(searchLower);
         case 'farmerName':
@@ -145,8 +145,8 @@ const OrderList = () => {
               </TableRow>
             ) : (
               filteredOrders.map((order) => (
-                <TableRow key={order._id}>
-                  <TableCell>{order._id}</TableCell>
+                <TableRow key={order.id}>
+                  <TableCell>{order.id}</TableCell>
                   <TableCell>{order.invoiceId || "Invoice not created"}</TableCell>
                   <TableCell>{order?.farmerId?.firstName} {order?.farmerId?.lastName}</TableCell>
                   <TableCell>{order.orderStatus}</TableCell>
@@ -156,7 +156,7 @@ const OrderList = () => {
                     <Button
                       variant="contained"
                       color="primary"
-                      href={`/dashboard/orders/order/${order._id}`}
+                      href={`/dashboard/orders/order/${order.id}`}
                     >
                       View Details
                     </Button>

@@ -25,7 +25,7 @@ interface Product {
 }
 
 interface Order {
-  _id: string;
+  id: string;
   farmerId: {
     farmName: string;
     farmLocation: string;
@@ -33,7 +33,7 @@ interface Order {
     lastName: string;
     telNumber: string;
     email: string;
-    _id: string;
+    id: string;
   };
   products: Product[];
   orderStatus: string;
@@ -46,7 +46,7 @@ interface Order {
 }
 
 interface Invoice {
-  _id: string;
+  id: string;
   orderId: string;
   farmerId: string;
   currency: string;
@@ -182,7 +182,7 @@ const OrderDetails = ({ params }: any) => {
   
       const newInvoice = {
         orderId,
-        farmerId: order.farmerId._id,
+        farmerId: order.farmerId.id,
         totalAmount: order.totalCost,
         email: order.farmerId.email,
         farmerName: `${order.farmerId.firstName} ${order.farmerId.lastName}`,
@@ -460,7 +460,7 @@ const OrderDetails = ({ params }: any) => {
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow mb-6">
         <div className="grid grid-cols-2 gap-4">
           <p className="dark:text-gray-200">
-            <span className="font-semibold">Order ID:</span> {order._id}
+            <span className="font-semibold">Order ID:</span> {order.id}
           </p>
           <p className="dark:text-gray-200">
             <span className="font-semibold">Name:</span>{' '}

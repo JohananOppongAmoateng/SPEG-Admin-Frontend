@@ -30,7 +30,7 @@ import {
 import ProductSkeleton from './ProductSkeleton';
 // TypeScript Interfaces
 interface Product {
-  _id: string;
+  id: string;
   productName: string;
   sellingPrice: number;
   availableStock: number;
@@ -45,9 +45,9 @@ interface Product {
 type ProductContextType = {
   products: Product[] | null;
   getAllProducts: () => void;
-  addProduct: (product: Omit<Product, '_id'>) => void;
+  addProduct: (product: Omit<Product, 'id'>) => void;
   getProductById: (id: string) => Promise<Product | null>;
-  updateProduct: (id: string, product: Omit<Product, '_id'>) => void;
+  updateProduct: (id: string, product: Omit<Product, 'id'>) => void;
   deleteProduct: (id: string) => void;
   issueProduct: (id: string, quantity: number) => void;
   restockProduct: (id: string, quantity: number) => void;
@@ -81,8 +81,8 @@ const Products = () => {
   }, []);
 
   const handleUpdateProduct = async (updatedProduct:any) => {
-    if (selectedProduct?._id) {
-      updateProduct(selectedProduct._id, updatedProduct);
+    if (selectedProduct?.id) {
+      updateProduct(selectedProduct.id, updatedProduct);
       setIsCreateModalOpen(false);
       toast.success('Product updated successfully');
     }
@@ -178,7 +178,7 @@ const Products = () => {
       ) : (
         <Grid container spacing={2} sx={{ mt: 2 }}>
           {filteredProducts?.map((product) => (
-            <Grid item xs={12} sm={6} lg={4} key={product._id}>
+            <Grid item xs={12} sm={6} lg={4} key={product.id}>
               <Card
                 elevation={3}
                 sx={{
@@ -304,7 +304,7 @@ const Products = () => {
                     fullWidth
                     variant="contained"
                     color="error"
-                    onClick={() => handleDeleteProduct(product._id)}
+                    onClick={() => handleDeleteProduct(product.id)}
                     startIcon={<Trash2 size={18} />}
                   >
                     Delete

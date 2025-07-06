@@ -26,7 +26,7 @@ function Row(props:any) {
   }
 
   interface Product {
-    _id: string;
+    id: string;
     productName: string;
     availableStock: number;
     stockBalance: number;
@@ -37,7 +37,7 @@ function Row(props:any) {
   interface Transaction {
     transactionId: string;
     createdAt: string;
-    _id: string;
+    id string;
     receivedFromIssuedTo: string;
     qtyReceived: number;
     qtyIssued: number;
@@ -107,7 +107,7 @@ function Row(props:any) {
                           transactionRow.createdAt
                         ).toLocaleDateString()}
                       </TableCell>
-                      <TableCell>{transactionRow._id}</TableCell>
+                      <TableCell>{transactionRow.id}</TableCell>
                       <TableCell>
                         {transactionRow.receivedFromIssuedTo}
                       </TableCell>
@@ -158,7 +158,7 @@ export default function CollapsibleProductTable() {
             ?.slice()
             .reverse()
             .map((row:any) => (
-              <Row key={row?._id} row={row} />
+              <Row key={row?.id} row={row} />
             ))}
         </TableBody>
       </Table>

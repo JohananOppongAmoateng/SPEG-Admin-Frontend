@@ -18,7 +18,7 @@ const UserDetailsModal = ({ user, onClose}: any) => {
 
     const handleVerify = async () => {
         try {
-            await verifyUser(user._id);
+            await verifyUser(user.id);
 
             toast.success("User verified successfully."); // Ensure success toast is awaited
 
@@ -38,7 +38,7 @@ const UserDetailsModal = ({ user, onClose}: any) => {
         setIsDeleting(true);
 
         try {
-            const response = await axiosInstance.delete(`/users/${user._id}`, {
+            const response = await axiosInstance.delete(`/users/${user.id}`, {
                 withCredentials: true
             });
             if (response.status === 200) {

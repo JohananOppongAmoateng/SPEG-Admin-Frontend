@@ -19,7 +19,7 @@ import { useProductContext } from "@/app/(context)/ProductContext";
 import { useExchangeRate } from "../../(hooks)/useExchangeRate";
 
 type Transaction = {
-  _id: string;
+  id: string;
   createdAt: string;
   receivedFromIssuedTo: string;
   qtyReceived: number;
@@ -38,14 +38,14 @@ type Transaction = {
 };
 
 type Product = {
-  _id: string;
+  id: string;
   productName: string;
   transactions: Transaction[];
 };
 
 // Define columns for transactions table
 const columns: GridColDef[] = [
-  { field: "_id", headerName: "Transaction ID", width: 220 },
+  { field: "id", headerName: "Transaction ID", width: 220 },
   { field: "createdAt", headerName: "Date Created",
      width: 150,
     renderCell: (params) => {
@@ -90,7 +90,7 @@ const Transactions = () => {
   const [salesFilterActive, setSalesFilterActive] = useState(false);
   const [purchaseFilterActive, setPurchaseFilterActive] = useState(false);
   const [columnVisibilityModel, setColumnVisibilityModel] = useState({
-    _id: true,
+    id: true,
     createdAt: true,
     receivedFromIssuedTo: true,
     qtyReceived: true,
@@ -116,7 +116,7 @@ const Transactions = () => {
 
   const handleProductChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const productId = e.target.value;
-    const product = products.find((prod:any) => prod._id === productId);
+    const product = products.find((prod:any) => prod.id === productId);
     setSelectedProduct(product || null);
   };
 
@@ -167,7 +167,7 @@ const Transactions = () => {
 
   const handleCreateReceipt = (receiptData: any) => {
     if (selectedProduct) {
-      restockProduct(selectedProduct._id, receiptData);
+      restockProduct(selectedProduct.id, receiptData);
     }
     setIsReceiptsModalOpen(false);
   };
@@ -219,7 +219,7 @@ const Transactions = () => {
   const resetFilters = () => {
     setFilterModel({ items: [] });
     setColumnVisibilityModel({
-      _id: true,
+      id: true,
       createdAt: true,
       receivedFromIssuedTo: true,
       qtyReceived: true,
@@ -269,12 +269,12 @@ const Transactions = () => {
         <div className="flex gap-3">
           <select
             id="productSelect"
-            value={selectedProduct?._id || ""}
+            value={selectedProduct?.id || ""}
             onChange={handleProductChange}
             className="mt-1 block py-2 px-3 border w-96 border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm dark:bg-gray-700 dark:text-white dark:border-gray-600"
           >
             {products.map((product:any) => (
-              <option key={product._id} value={product._id}>
+              <option key={product.id} value={product.id}>
                 {product.productName}
               </option>
             ))}
@@ -301,7 +301,7 @@ const Transactions = () => {
               },
             }}
             pageSizeOptions={[5]}
-            getRowId={(row) => row._id}
+            getRowId={(row) => row.id}
             slots={{
               toolbar: CustomToolbar,
             }}

@@ -205,7 +205,7 @@ const Dashboard = () => {
     if (!products) return [];
     const allTransactions = products.flatMap((product: any) =>
       product?.transactions?.map((transaction: any) => ({
-        id: transaction._id, // Ensure unique id for DataGrid
+        id: transaction.id, // Ensure unique id for DataGrid
         ...transaction,
         productName: product.productName,
         date: new Date(transaction.createdAt),
