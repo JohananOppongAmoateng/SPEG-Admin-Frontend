@@ -37,7 +37,7 @@ function Row(props:any) {
   interface Transaction {
     transactionId: string;
     createdAt: string;
-    id string;
+    id: string;
     receivedFromIssuedTo: string;
     qtyReceived: number;
     qtyIssued: number;
