@@ -84,7 +84,7 @@ function Row(props:any) {
               <Typography variant="h6" gutterBottom component="div">
                 Transactions
               </Typography>
-              <a href="/transactions">
+              <a href="/dashboard/transactions">
                 <Button>View Detailed Transaction</Button>
               </a>
               <Table size="small" aria-label="transactions">

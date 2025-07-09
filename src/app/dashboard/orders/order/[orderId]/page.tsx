@@ -26,7 +26,7 @@ interface Product {
 
 interface Order {
   id: string;
-  farmerId: {
+  farmer: {
     farmName: string;
     farmLocation: string;
     firstName: string;
@@ -35,7 +35,7 @@ interface Order {
     email: string;
     id: string;
   };
-  products: Product[];
+  orderProducts: Product[];
   orderStatus: string;
   paymentStatus: string;
   awaitingPickup: string;
@@ -109,7 +109,7 @@ const OrderDetails = ({ params }: any) => {
           const fetchedOrder: Order = response.data.order;
           console.log(fetchedOrder, 'this is the fetched order ');
           setOrder(fetchedOrder);
-          setUpdatedProducts(fetchedOrder.products);
+          setUpdatedProducts(fetchedOrder.orderProducts);
           setPaymentStatus(fetchedOrder.paymentStatus);
           setPayment(fetchedOrder.paymentStatus);
           setPickup(fetchedOrder.awaitingPickup);
@@ -117,7 +117,7 @@ const OrderDetails = ({ params }: any) => {
           setInvoiceId(fetchedOrder.invoiceId || null);
           // Initialize quantityInputs with current quantities
           setQuantityInputs(
-            fetchedOrder.products.map((product) => product.quantity.toString())
+            fetchedOrder.orderProducts.map((product) => product.quantity.toString())
           );
         })
         .catch((error) => console.error(error))
@@ -182,10 +182,10 @@ const OrderDetails = ({ params }: any) => {
   
       const newInvoice = {
         orderId,
-        farmerId: order.farmerId.id,
+        farmerId: order.farmer.id,
         totalAmount: order.totalCost,
-        email: order.farmerId.email,
-        farmerName: `${order.farmerId.firstName} ${order.farmerId.lastName}`,
+        email: order.farmer.email,
+        farmerName: `${order.farmer.firstName} ${order.farmer.lastName}`,
       };
   
       await axiosInstance.post('/invoices/create', newInvoice);
@@ -303,10 +303,10 @@ const OrderDetails = ({ params }: any) => {
 
   const createIssue = async () => {
     try {
-      const issuerName = `${order?.farmerId.firstName} ${order?.farmerId.lastName}`;
+      const issuerName = `${order?.farmer.firstName} ${order?.farmer.lastName}`;
 
       // Using for...of to await each post request sequentially
-      for (const product of order?.products || []) {
+      for (const product of order?.orderProducts || []) {
         const data = {
           receivedFromIssuedTo: issuerName,
           qtyIssued: product.quantity,
@@ -464,30 +464,30 @@ const OrderDetails = ({ params }: any) => {
           </p>
           <p className="dark:text-gray-200">
             <span className="font-semibold">Name:</span>{' '}
-            {order.farmerId.firstName} {order.farmerId.lastName}
+            {order.farmer.firstName} {order.farmer.lastName}
           </p>
          
           <p className="dark:text-gray-200">
             <span className="font-semibold">Farm Name:</span>{' '}
-            {order.farmerId.farmName}
+            {order.farmer.farmName}
           </p>
           <p className="dark:text-gray-200">
             <span className="font-semibold">Farm Location:</span>{' '}
-            {order.farmerId.farmLocation}
+            {order.farmer.farmLocation}
           </p>
           <p className="dark:text-gray-200">
             <span className="font-semibold">Total Cost:</span> {order.totalCost}
           </p>
           <p className="dark:text-gray-200">
             <span className="font-semibold">Tel Number:</span>{' '}
-            {order.farmerId.telNumber}
+            {order.farmer.telNumber}
           </p>
           <p className="dark:text-gray-200">
             <span className="font-semibold">Invoice ID:</span>{' '}
             {invoiceId ? invoiceId : 'No invoice created'}
           </p>
           <p className="dark:text-gray-200">
-            <span className="font-semibold">Email:</span> {order.farmerId.email}
+            <span className="font-semibold">Email:</span> {order.farmer.email}
           </p>
           <p className="dark:text-gray-200">
             <span className="font-semibold">Status:</span> {order.orderStatus}
