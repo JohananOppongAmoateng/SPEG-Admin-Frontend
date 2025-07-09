@@ -169,6 +169,7 @@ const OrderDetails = ({ params }: any) => {
       
       await axiosInstance.patch(`/orders/${orderId}`, {
         orderStatus: 'Approved',
+        products: updatedProducts
       });
   
       setApprovalSteps(steps => steps.map((step, i) => 
