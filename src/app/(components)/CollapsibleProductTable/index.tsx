@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import {
   Table,
   TableBody,
@@ -136,7 +136,12 @@ function Row(props:any) {
 }
 
 export default function CollapsibleProductTable() {
-  const { products } = useProductContext();
+  const { products , getAllProducts } = useProductContext(); 
+
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+  
   return (
     <TableContainer
       component={Paper}

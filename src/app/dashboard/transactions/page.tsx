@@ -83,7 +83,7 @@ const Transactions = () => {
       error: rateError
   } = useExchangeRate();
   const currentRate = EUR_GHS || FALLBACK_RATE;
-  const { products, issueProduct, restockProduct } = useProductContext();
+  const { products, issueProduct, restockProduct, getAllProducts } = useProductContext();
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [isReceiptsModalOpen, setIsReceiptsModalOpen] = useState(false);
   const [filterModel, setFilterModel] = useState<GridFilterModel>({ items: [] });
@@ -109,9 +109,12 @@ const Transactions = () => {
   });
 
   useEffect(() => {
+    getAllProducts();
     if (products && products.length > 0) {
       setSelectedProduct(products[0]);
     }
+
+
   }, [products]);
 
   const handleProductChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
