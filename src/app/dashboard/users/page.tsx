@@ -111,21 +111,13 @@ const Users = () => {
         const fetchUsers = async () => {
             setIsLoading(true); // Ensure loading state is set at the start
             try {
-                const response = await fetch("/users/all", {
-                    signal: controller.signal
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
-                setUsers(data.reverse());
+                const { data } = await axiosInstance.get("/users/all")
+                setUsers(data);
             } catch (error) {
-                if ((error as any).name === "AbortError") {
-                    console.log("Request was cancelled as expected:", (error as any).message);
-                } else {
+            
                     console.error("Error fetching users:", error);
                     setIsError(true);
-                }
+                
             } finally {
                 setIsLoading(false);
             }
