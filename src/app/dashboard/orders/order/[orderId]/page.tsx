@@ -526,11 +526,11 @@ const OrderDetails = ({ params }: any) => {
             {isProcessingUpdatePayment ? 'Processing...' : 'Update Payment Status'}
           </button>
 
-          {payment === 'Paid' && (
+          {/* {payment === 'Paid' && ( 
             <div className="absolute left-0 mt-2 w-48 p-2 bg-gray-800 dark:bg-gray-700 text-white text-sm rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
               Payment has already been made, so this action is disabled.
             </div>
-          )}
+           )} */}
         </div>
       </div>
       {/* awaiting collection update */}
@@ -552,14 +552,14 @@ const OrderDetails = ({ params }: any) => {
             disabled={pickup === 'Completed'}
           >
             <Save className="w-5 h-5 mr-2" />
-            {isProcessingUpdatePayment ? 'Processing...' : 'Update Pickup Status'}
+            {isProcessingUpdateCollection ? 'Processing...' : 'Update Pickup Status'}
           </button>
 
-          {awaitingCollection=== 'Completed' && (
+          {/* {awaitingCollection=== 'Completed' && ( 
             <div className="absolute left-0 mt-2 w-48 p-2 bg-gray-800 dark:bg-gray-700 text-white text-sm rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity">
              collection has already been made, so this action is disabled.
             </div>
-          )}
+          )} */}
         </div>
       </div>
 
