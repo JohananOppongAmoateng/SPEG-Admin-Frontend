@@ -99,16 +99,20 @@ const columns: GridColDef[] = [
     }
 ];
     interface User {
-        id: string;
-        firstName?: string;
-        lastName?: string;
-        email: string;
-        createdAt: string;
-        adminVerified: boolean;
+  id: string;
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  farmName?: string;
+  farmLocation?: string;
+  telNumber?: string;
+  role?: string;
+  adminVerified: boolean;
+  isVerified: boolean; 
     }
 
 const Users = () => {
-    const [users, setUsers] = useState<User[]>(User[]);
+    const [users, setUsers] = useState<User[]>([]);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
