@@ -77,8 +77,8 @@ const columns: GridColDef[] = [
     headerName: "Pickup Confirmed",
     width: 150,
     renderCell: (params) => {
-      // only show for receipts
-      if (params.row.status === "Receipt") {
+      // only show for issues
+      if (params.row.status === "Issue") {
         return params.value ? true : false;
       }
       // blank for issues
@@ -121,7 +121,6 @@ const Transactions = () => {
   });
 
   useEffect(() => {
-    getAllProducts();
     if (products && products.length > 0) {
       setSelectedProduct(products[0]);
     }
