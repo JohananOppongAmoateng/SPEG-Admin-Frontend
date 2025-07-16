@@ -72,7 +72,19 @@ const columns: GridColDef[] = [
   { field: "valueInCedi", headerName: "Value (GH₵)", width: 180, type: "number" },
   { field: "status", headerName: "Status", width: 150 },
   { field: "invoiceStatus", headerName: "Invoice Status", width: 150 },
-  { field: "pickupConfirmed", headerName: "Pickup Confirmed", width: 150, type: "boolean" },
+  {
+    field: "pickupConfirmed",
+    headerName: "Pickup Confirmed",
+    width: 150,
+    renderCell: (params) => {
+      // only show for receipts
+      if (params.row.status === "Receipt") {
+        return params.value ? true : false;
+      }
+      // blank for issues
+      return "";
+    },
+  },
 ];
 
 const Transactions = () => {
