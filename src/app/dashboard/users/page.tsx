@@ -98,10 +98,18 @@ const columns: GridColDef[] = [
             </Tooltip>
     }
 ];
+    interface User {
+        id: string;
+        firstName?: string;
+        lastName?: string;
+        email: string;
+        createdAt: string;
+        adminVerified: boolean;
+    }
 
 const Users = () => {
-    const [users, setUsers] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(null);
+    const [users, setUsers] = useState<User[]>(User[]);
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
 
@@ -129,6 +137,11 @@ const Users = () => {
             controller.abort(); // Cleanup: cancel request on unmount
         };
     }, []); // Empty dependency array ensures this runs once on mount
+
+    const handleRowVerify = (id: string) =>
+            setUsers(u =>
+                u.map(x => (x.id === id ? { ...x, adminVerified: true } : x))
+            );
 
     if (isLoading) {
         return (
@@ -175,6 +188,7 @@ const Users = () => {
                 <UserDetailsModal
                     user={selectedUser}
                     onClose={() => setSelectedUser(null)}
+                    markVerified={handleRowVerify}
                 />
             )}
         </div>

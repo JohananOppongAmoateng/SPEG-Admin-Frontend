@@ -13,7 +13,7 @@ import { verifyUser } from "../../../state/api";
 import toast from "react-hot-toast";
 import axiosInstance from "@/utils/axiosInstance";
 
-const UserDetailsModal = ({ user, onClose}: any) => {
+const UserDetailsModal = ({ user, onClose, markVerified}: any) => {
     const [isDeleting, setIsDeleting] = useState(false);
 
     const handleVerify = async () => {
@@ -21,7 +21,7 @@ const UserDetailsModal = ({ user, onClose}: any) => {
             await verifyUser(user.id);
 
             toast.success("User verified successfully."); // Ensure success toast is awaited
-
+            markVerified(user.id);
             onClose();
         } catch (error) {
             console.error("Verification failed:", error);
