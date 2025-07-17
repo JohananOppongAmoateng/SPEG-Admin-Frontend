@@ -76,10 +76,10 @@ const columns: GridColDef[] = [
     field: "pickupConfirmed",
     headerName: "Pickup Confirmed",
     width: 150,
-    renderCell: params => {
+    renderCell: (params) => {
       // only show for issues
       if (params.row.status === "Issue") {
-        return <div>params.value</div>;
+        return <div>{params.row.pickupConfirmed }</div>;
       }
       // blank for issues
       return <div></div>; ;

@@ -552,7 +552,7 @@ const OrderDetails = ({ params }: any) => {
             disabled={pickup === 'Completed'}
           >
             <Save className="w-5 h-5 mr-2" />
-            {isProcessingUpdateCollection ? 'Processing...' : 'Update Pickup Status'}
+            {isProcessingCollection ? 'Processing...' : 'Update Pickup Status'}
           </button>
 
           {/* {awaitingCollection=== 'Completed' && ( 

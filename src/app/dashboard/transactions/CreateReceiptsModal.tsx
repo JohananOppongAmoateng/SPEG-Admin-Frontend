@@ -75,6 +75,16 @@ const CreateReceiptsModal = ({
             <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
                 <Header name="Add New Receipt" />
                 <form onSubmit={handleSubmit} className="mt-5">
+                    <label htmlFor="outOfOrderDate" className={labelCssStyles}>
+                        Invoice Date
+                    </label>
+                    <input
+                        type="date"
+                        name="outOfOrderDate"
+                        onChange={handleChange}
+                        value={formData.outOfOrderDate}
+                        className={inputCssStyles}
+                    />
                     <label htmlFor="receivedFrom" className={labelCssStyles}>
                         Vendor Name
                     </label>
@@ -143,16 +153,7 @@ const CreateReceiptsModal = ({
                         required
                     />
 
-                    <label htmlFor="outOfOrderDate" className={labelCssStyles}>
-                        Invoice Date
-                    </label>
-                    <input
-                        type="date"
-                        name="outOfOrderDate"
-                        onChange={handleChange}
-                        value={formData.outOfOrderDate}
-                        className={inputCssStyles}
-                    />
+                    
 
                     <button
                         type="submit"
