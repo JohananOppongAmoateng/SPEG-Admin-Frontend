@@ -100,7 +100,7 @@ const Transactions = () => {
   const [salesFilterActive, setSalesFilterActive] = useState(false);
   const [purchaseFilterActive, setPurchaseFilterActive] = useState(false);
   const [columnVisibilityModel, setColumnVisibilityModel] = useState({
-    id: true,
+    id: false,
     createdAt: true,
     receivedFromIssuedTo: true,
     qtyReceived: true,
