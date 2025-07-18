@@ -8,7 +8,7 @@ type ReceiptFormData = {
     valueInEuro: number;
     sellingPrice: number;
     cediConversionRate: any;
-    outOfOrderDate: string;
+    invoiceDate: string;
 };
 
 type CreateReceiptsModalProps = {
@@ -30,7 +30,7 @@ const CreateReceiptsModal = ({
         valueInEuro: 0,
         sellingPrice: 0,
         cediConversionRate: rate,
-        outOfOrderDate: ""
+        invoiceDate: ""
     });
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ const CreateReceiptsModal = ({
         setFormData({
             ...formData,
             [name]:
-                name === "receivedFrom" || name === "outOfOrderDate"
+                name === "receivedFrom" || name === "invoiceDate"
                     ? value
                     : parseFloat(value)
         });
@@ -75,14 +75,14 @@ const CreateReceiptsModal = ({
             <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
                 <Header name="Add New Receipt" />
                 <form onSubmit={handleSubmit} className="mt-5">
-                    <label htmlFor="outOfOrderDate" className={labelCssStyles}>
+                    <label htmlFor="invoiceDate" className={labelCssStyles}>
                         Invoice Date
                     </label>
                     <input
                         type="date"
-                        name="outOfOrderDate"
+                        name="invoiceDate"
                         onChange={handleChange}
-                        value={formData.outOfOrderDate}
+                        value={formData.invoiceDate}
                         className={inputCssStyles}
                     />
                     <label htmlFor="receivedFrom" className={labelCssStyles}>

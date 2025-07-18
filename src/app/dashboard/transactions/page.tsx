@@ -21,6 +21,7 @@ import { useExchangeRate } from "../../(hooks)/useExchangeRate";
 type Transaction = {
   id: string;
   createdAt: string;
+  invoiceDate: string;
   receivedFromIssuedTo: string;
   qtyReceived: number;
   qtyIssued: number;
@@ -46,6 +47,7 @@ type Product = {
 // Define columns for transactions table
 const columns: GridColDef[] = [
   { field: "id", headerName: "Transaction ID", width: 220 },
+  { field: "invoiceDate", headerName: "Invoice Date", width: 150,},
   { field: "createdAt", headerName: "Date Created",
      width: 150,
     renderCell: (params) => {
@@ -79,7 +81,7 @@ const columns: GridColDef[] = [
     renderCell: (params) => {
       // only show for issues
       if (params.row.status === "Issue") {
-        return <div>params.row.pickupConfirmed.value</div>;
+        return <div>params.value</div>;
       }
     },
   },
@@ -102,6 +104,7 @@ const Transactions = () => {
   const [columnVisibilityModel, setColumnVisibilityModel] = useState({
     id: false,
     createdAt: true,
+    invoiceDate: true,
     receivedFromIssuedTo: true,
     qtyReceived: true,
     qtyIssued: true,
@@ -233,6 +236,7 @@ const Transactions = () => {
     setColumnVisibilityModel({
       id: true,
       createdAt: true,
+      invoiceDate: true,
       receivedFromIssuedTo: true,
       qtyReceived: true,
       qtyIssued: true,

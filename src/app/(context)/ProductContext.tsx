@@ -22,7 +22,7 @@ type stockData = {
     valueInEuro: number;
     sellingPrice: number;
     cediConversionRate: number;
-    outOfOrderDate: string;
+    invoiceDate: string;
   };
 
 
