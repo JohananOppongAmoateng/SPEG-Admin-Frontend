@@ -11,12 +11,14 @@ import {
   GridToolbarFilterButton,
   GridToolbarDensitySelector,
   GridToolbarExport,
+  GridRowSelectionModel
 } from "@mui/x-data-grid";
 import { Button, Tooltip } from "@mui/material";
-import { PlusCircleIcon } from "lucide-react";
+import { PlusCircleIcon, Trash2 } from "lucide-react";
 import CreateReceiptsModal from "./CreateReceiptsModal";
 import { useProductContext } from "@/app/(context)/ProductContext";
 import { useExchangeRate } from "../../(hooks)/useExchangeRate";
+import axiosInstance from "@/utils/axiosInstance";
 
 type Transaction = {
   id: string;
@@ -120,6 +122,7 @@ const Transactions = () => {
     invoiceStatus: true,
     pickupConfirmed: false,
   });
+  const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
 
   useEffect(() => {
     if (products && products.length > 0) {
@@ -254,6 +257,34 @@ const Transactions = () => {
     });
   };
 
+
+  const handleDeleteTransactions = () => {
+    if (!selectedProduct || !rowSelectionModel.length) return;
+    if (!window.confirm("Are you sure you want to delete the selected receipt transactions?")) return;
+    const receiptIds = rowSelectionModel.filter(id => {
+      const tx = selectedProduct.transactions.find(t => t.id === id.toString());
+      return tx?.status === "Receipt";
+    });
+    
+    const sendReceiptsToBackend = async (receiptIds: string[]) => {
+      for (const receiptId of receiptIds) {
+      try {
+        await axiosInstance.delete(`/transactions/${receiptId}/product/${selectedProduct.id}`);
+        console.log(`Receipt ${receiptId} deleted successfully.`);
+      } catch (error) {
+        console.error(`Error deleting receipt ${receiptId}:`, error);
+        alert(`Failed to delete receipt ${receiptId}. Please try again.`);
+      }
+      }
+      alert("Receipts deletion process completed.");
+    };
+
+    sendReceiptsToBackend(receiptIds.map(id => id.toString()));
+    getAllProducts();
+    setRowSelectionModel([]);
+  }
+
+
   if (!products || products.length === 0) {
     return <div>Loading products...</div>;
   }
@@ -302,7 +333,16 @@ const Transactions = () => {
             <PlusCircleIcon className="mr-2" />
             Create Receipts
           </button>
-          
+
+          <button
+            className="flex items-center bg-blue-500 hover:bg-blue-700 text-gray-200 font-bold py-2 px-4 rounded"
+            onClick={handleDeleteTransactions}
+            disabled={!rowSelectionModel.length}
+          >
+            <Trash2 className="mr-2" />
+            Delete Transactions
+          </button>
+
         </div>
       </div>
 
@@ -316,6 +356,12 @@ const Transactions = () => {
                 paginationModel: { pageSize: 5 },
               },
             }}
+            checkboxSelection={true}
+            onRowSelectionModelChange={(newRowSelectionModel) => {
+              setRowSelectionModel(newRowSelectionModel);
+            }}
+            rowSelectionModel={rowSelectionModel}
+            isRowSelectable={(params) => params.row.status === "Receipt"}
             pageSizeOptions={[5]}
             getRowId={(row) => row.id}
             slots={{
