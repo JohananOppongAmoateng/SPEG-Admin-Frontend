@@ -38,6 +38,7 @@ ChartJS.register(
   Tooltip,
   Legend
 );
+import axiosInstance from "@/utils/axiosInstance";
 
 // Styled components
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -55,6 +56,24 @@ const Dashboard = () => {
   const { products } = useProductContext();
   const [isLoading, setIsLoading] = useState(true);
   const { EUR_GHS, loading: rateLoading, error: rateError } = useExchangeRate();
+  const [pendingInvoices, setPendingInvoices] = useState<any[]>([]);
+
+
+  useEffect(() => {
+    
+        // Fetch pending invoices data from the API
+    const fetchPendingInvoices =  async () => {
+      try {
+        const { data } =  await axiosInstance.get("/orders/pendingInvoices")
+        console.log(data)
+        setPendingInvoices(data);
+      } catch (error) {
+        console.error("Error fetching pending invoices:", error);
+      }
+    }
+    fetchPendingInvoices();
+    
+  }, [products]);
 
   // Fallback rate in case API fails
   const FALLBACK_RATE = 17.05;
@@ -126,20 +145,7 @@ const Dashboard = () => {
     }));
   }, [products]);
 
-  // Calculate pending invoices by product
-  const pendingInvoices = useMemo(() => {
-    if (!products) return [];
-    return products.reduce((acc: any[], product: any) => {
-      const productPendingInvoices = product?.transactions
-        ?.filter((txn: any) => txn.invoiceStatus === "Pending")
-        .reduce((total: any, txn: any) => total + (txn.valueInEuro || 0), 0);
-      acc.push({
-        productName: product.productName,
-        pendingInvoice: productPendingInvoices,
-      });
-      return acc;
-    }, []);
-  }, [products]);
+
 
   // Calculate total unconfirmed pickups
   const unconfirmedPickups = useMemo(() => {
