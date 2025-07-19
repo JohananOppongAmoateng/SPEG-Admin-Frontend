@@ -149,12 +149,11 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         },
       });
     } catch (error:any) {
-      console.error("Error deleting product:", error);
-      toast.error(`${error.response?.data?.message}`, {
-        style: {
-          fontSize: "19px",
-        },
-      });
+      if (error?.response?.status === 400) {
+              toast.error('Product cannot be deleted because it has associated order products');
+      } else {
+              toast.error('Failed to delete product');
+      }
     }
   };
 

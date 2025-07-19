@@ -90,10 +90,13 @@ const Products = () => {
 
   const handleDeleteProduct = async (productId: string) => {
     try {
-       deleteProduct(productId);
-      
-    } catch (error) {
-      toast.error('Failed to delete product');
+      deleteProduct(productId);
+    } catch (error: any) {
+      if (error?.response?.status === 400) {
+        toast.error('Product cannot be deleted because it has associated order products');
+      } else {
+        toast.error('Failed to delete product');
+      }
     }
   };
 
