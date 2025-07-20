@@ -65,8 +65,8 @@ const Dashboard = () => {
     const fetchPendingInvoices =  async () => {
       try {
         const { data } =  await axiosInstance.get("/orders/pending/invoices")
-        console.log(data)
-        setPendingInvoices(data);
+        console.log(data.payload)
+        setPendingInvoices(data.payload);
       } catch (error) {
         console.error("Error fetching pending invoices:", error);
       }
