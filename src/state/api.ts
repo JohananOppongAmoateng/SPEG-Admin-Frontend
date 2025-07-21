@@ -78,3 +78,34 @@ export const refreshAuth = async () => {
         throw error;
     }
 };
+
+export async function deleteUser(userId: string) {
+  try {
+    // Grab the HttpOnly cookie that Next set on login
+    const token = cookies().get("accessToken")?.value;
+    if (!token) {
+      console.error("No access token in cookie");
+      return { success: false, error: "Not authenticated" };
+    }
+
+    // Forward it as a Bearer token
+    const response = await axiosInstance.delete(
+      `/users/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.status !== 200) {
+      console.error("Delete failed with status", response.status);
+      return { success: false, error: "Delete request failed" };
+    }
+
+    return { success: true };
+  } catch (err: any) {
+    console.error("Error in deleteUserAction:", err);
+    return { success: false, error: err.message || "Unknown error" };
+  }
+}
