@@ -38,7 +38,7 @@ const UserDetailsModal = ({ user, onClose, markVerified}: any) => {
 
         setIsDeleting(true);
         try {
-      const result = await deleteUser(userId);
+      const result = await deleteUser(user.id);
       if (result.success) {
         toast.success("User deleted successfully");
         onClose();
