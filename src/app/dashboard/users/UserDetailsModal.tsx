@@ -12,6 +12,7 @@ import { CheckCircle, Close, Delete, VerifiedUser } from "@mui/icons-material";
 import { verifyUser } from "../../../state/api";
 import toast from "react-hot-toast";
 import axiosInstance from "@/utils/axiosInstance";
+import { cookies } from "next/headers";
 
 const UserDetailsModal = ({ user, onClose, markVerified}: any) => {
     const [isDeleting, setIsDeleting] = useState(false);
@@ -38,9 +39,13 @@ const UserDetailsModal = ({ user, onClose, markVerified}: any) => {
         setIsDeleting(true);
 
         try {
-            const response = await axiosInstance.delete(`/users/${user.id}`, {
-                withCredentials: true
-            });
+            const token = cookies().get("accessToken")?.value;
+            if (!token) throw new Error("No access token in cookie");
+            const response = await axiosInstance.delete(`/users/${user.id}`,{
+                    headers: {
+                      Authorization: `Bearer ${token}`,
+                    },
+                  });
             if (response.status === 200) {
                 toast.success("User deleted successfully."); // Await success toast
 
