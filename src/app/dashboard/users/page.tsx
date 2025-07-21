@@ -118,7 +118,7 @@ const Users = () => {
     const [isError, setIsError] = useState(false);
 
     useEffect(() => {
-        const controller = new AbortController();
+
 
         const fetchUsers = async () => {
             setIsLoading(true); // Ensure loading state is set at the start
@@ -136,10 +136,6 @@ const Users = () => {
         };
 
         fetchUsers();
-
-        return () => {
-            controller.abort(); // Cleanup: cancel request on unmount
-        };
     }, []); // Empty dependency array ensures this runs once on mount
 
     const handleRowVerify = (id: string) =>

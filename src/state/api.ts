@@ -5,10 +5,14 @@ import { cookies } from "next/headers";
 
 export const verifyUser = async (userId: string) => {
     try {
+        const token = cookies().get("accessToken")?.value;
+        if (!token) throw new Error("No access token in cookie")
         const data = { adminVerified: true };
         await axiosInstance.patch(`/users/${userId}/adminverify`, data, {
-            withCredentials: true
-        });
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
         return { success: true };
     } catch (error) {
         console.error("Error verifying user:", error);
