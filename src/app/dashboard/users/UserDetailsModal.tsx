@@ -9,10 +9,10 @@ import {
     IconButton
 } from "@mui/material";
 import { CheckCircle, Close, Delete, VerifiedUser } from "@mui/icons-material";
-import { verifyUser } from "../../../state/api";
+import { verifyUser, deleteUser } from "../../../state/api";
 import toast from "react-hot-toast";
 import axiosInstance from "@/utils/axiosInstance";
-import { cookies } from "next/headers";
+
 
 const UserDetailsModal = ({ user, onClose, markVerified}: any) => {
     const [isDeleting, setIsDeleting] = useState(false);
@@ -37,28 +37,20 @@ const UserDetailsModal = ({ user, onClose, markVerified}: any) => {
         if (!confirmDelete) return;
 
         setIsDeleting(true);
-
         try {
-            const token = cookies().get("accessToken")?.value;
-            if (!token) throw new Error("No access token in cookie");
-            const response = await axiosInstance.delete(`/users/${user.id}`,{
-                    headers: {
-                      Authorization: `Bearer ${token}`,
-                    },
-                  });
-            if (response.status === 200) {
-                toast.success("User deleted successfully."); // Await success toast
-
-                onClose();
-            } else {
-                throw new Error("Failed to delete user"); // Ensure error toast on failure
-            }
-        } catch (error) {
-            console.error("Deletion failed:", error);
-            toast.error("Failed to delete user.");
-        } finally {
-            setIsDeleting(false);
-        }
+      const result = await deleteUserAction(userId);
+      if (result.success) {
+        toast.success("User deleted successfully");
+        onClose();
+      } else {
+        toast.error(`Delete failed: ${result.error}`);
+      }
+    } catch (err) {
+      console.error("Unexpected error deleting user:", err);
+      toast.error("Failed to delete user.");
+    } finally {
+      setIsDeleting(false);
+    }
     };
 
     return (
