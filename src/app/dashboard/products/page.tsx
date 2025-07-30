@@ -28,7 +28,7 @@ import {
   InputAdornment,
 } from '@mui/material';
 import ProductSkeleton from './ProductSkeleton';
-import CreateReceiptsModal from "@app/dashboard/transactions/CreateReceiptsModal"
+import CreateReceiptsModal from "@/app/dashboard/transactions/CreateReceiptsModal"
 import { useExchangeRate } from "../../(hooks)/useExchangeRate";
 // TypeScript Interfaces
 interface Product {
