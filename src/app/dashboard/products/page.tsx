@@ -28,6 +28,8 @@ import {
   InputAdornment,
 } from '@mui/material';
 import ProductSkeleton from './ProductSkeleton';
+import CreateReceiptsModal from "@app/dashboard/transactions/CreateReceiptsModal"
+import { useExchangeRate } from "../../(hooks)/useExchangeRate";
 // TypeScript Interfaces
 interface Product {
   id: string;
@@ -58,9 +60,15 @@ const Products = () => {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const { products, addProduct, updateProduct, deleteProduct } =
-    useProductContext();
+  const [isReceiptsModalOpen, setIsReceiptsModalOpen] = useState(false);
+  const { products, addProduct, updateProduct, deleteProduct, restockProduct } = useProductContext();
+  const FALLBACK_RATE = 17.05;
+  const {
+          EUR_GHS,
+          loading: rateLoading,
+          error: rateError
+      } = useExchangeRate();
+  const currentRate = EUR_GHS || FALLBACK_RATE;
 
   const filteredProducts = useMemo(() => {
     return products?.filter((product: Product) =>
@@ -71,6 +79,13 @@ const Products = () => {
   const handleEditClick = (product: Product) => {
     setSelectedProduct(product);
     setIsCreateModalOpen(true);
+  };
+
+  const handleCreateReceipt = (receiptData: any) => {
+    if (selectedProduct) {
+      restockProduct(selectedProduct.id, receiptData);
+    }
+    setIsReceiptsModalOpen(false);
   };
 
   useEffect(() => {
@@ -151,6 +166,8 @@ const Products = () => {
         >
           Create Product
         </Button>
+
+        
       </Box>
 
       {/* Header */}
@@ -312,6 +329,18 @@ const Products = () => {
                   >
                     Delete
                   </Button>
+
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<PlusCircle size={18} />}
+                    onClick={() => {() => {
+                      setSelectedProduct(product);
+                      setIsReceiptsModalOpen(true);
+                    }}}>
+                    Add Stock
+                  </Button>
                 </CardActions>
               </Card>
             </Grid>
@@ -326,6 +355,13 @@ const Products = () => {
         onUpdate={handleUpdateProduct}
         selectedProduct={selectedProduct}
       />
+
+     <CreateReceiptsModal
+           isOpen={isReceiptsModalOpen}
+           onClose={() => setIsReceiptsModalOpen(false)}
+           onCreate={handleCreateReceipt}
+           rate ={EUR_GHS}
+         />
     </Box>
   );
 };
