@@ -1,7 +1,7 @@
 'use client';
 import { Mail } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router"; // To get query params in Next.js
+import { useRouter } from "next/navigation"; // To get query params in Next.js
 import toast from "react-hot-toast"; // Import React Hot Toast
 import axiosInstance from "@/utils/axiosInstance";
 
