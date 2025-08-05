@@ -1,3 +1,4 @@
+'use client';
 import { Mail } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router"; // To get query params in Next.js
