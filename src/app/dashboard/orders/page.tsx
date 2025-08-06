@@ -64,7 +64,7 @@ const OrderList = () => {
         case 'invoiceId':
           return order.invoiceId?.toLowerCase().includes(searchLower);
         case 'farmerName':
-          const fullName = `${order.farmerId?.firstName} ${order.farmerId?.lastName}`.toLowerCase();
+          const fullName = `${order.farmer?.firstName} ${order.farmer?.lastName}`.toLowerCase();
           return fullName.includes(searchLower);
         default:
           return false;
@@ -148,7 +148,7 @@ const OrderList = () => {
                 <TableRow key={order.id}>
                   <TableCell>{order.id}</TableCell>
                   <TableCell>{order.invoiceId || "Invoice not created"}</TableCell>
-                  <TableCell>{order?.farmerId?.firstName} {order?.farmerId?.lastName}</TableCell>
+                  <TableCell>{order?.farmer?.firstName} {order?.farmer?.lastName}</TableCell>
                   <TableCell>{order.orderStatus}</TableCell>
                   <TableCell>{order.paymentStatus}</TableCell>
                   <TableCell>{formatDate(order.createdAt)}</TableCell>
