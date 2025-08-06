@@ -335,10 +335,10 @@ const Products = () => {
                     variant="outlined"
                     color="primary"
                     startIcon={<PlusCircle size={18} />}
-                    onClick={() => {() => {
+                    onClick={() => {
                       setSelectedProduct(product);
-                      setIsReceiptsModalOpen(true);
-                    }}}>
+                      setIsReceiptsModalOpen(true); // Open the modal here
+                    }}>
                     Add Stock
                   </Button>
                 </CardActions>
