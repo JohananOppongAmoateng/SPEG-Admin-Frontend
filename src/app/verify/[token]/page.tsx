@@ -22,7 +22,7 @@ const EmailVerificationConfirmation = () => {
 
       try {
         // Make the API call using Axios
-        const response = await axiosInstance.post("/api/users/verifytoken", { token });
+        const response = await axiosInstance.post("/users/verifytoken", { token });
 
         // Check if the response is successful
         if (response.status === 200) {
