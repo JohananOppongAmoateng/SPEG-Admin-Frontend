@@ -73,7 +73,6 @@ const EmailVerificationConfirmation = () => {
           </button>
         )}
       </div>
-      <Toast /> {/* Toast container for React Hot Toast */}
     </div>
   );
 };
