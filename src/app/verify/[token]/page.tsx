@@ -1,7 +1,7 @@
 'use client';
 import { Mail } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; // To get query params in Next.js
+import { useParams } from 'next/navigation' // To get query params in Next.js
 import toast from "react-hot-toast"; // Import React Hot Toast
 import axiosInstance from "@/utils/axiosInstance";
 
@@ -10,9 +10,7 @@ const EmailVerificationConfirmation = () => {
   const [isSubmitting, setIsSubmitting] = useState(true);
   const [statusMessage, setStatusMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
-  const router = useRouter(); // To handle routing in Next.js
-
-  const { token } = router.query; // Extract the token from the URL query
+  const { token } = useParams();
 
   useEffect(() => {
     const verifyEmail = async () => {
