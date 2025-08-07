@@ -73,10 +73,32 @@ const columns: GridColDef[] = [
                 </Tooltip>
             );
         }
+    },{
+        field: "emailVerified",
+        headerName: "Email Verification",
+        width: 130,
+        type: "boolean",
+        renderCell: params =>
+            <Tooltip
+                title={
+                    params.value
+                        ? "User has verified email"
+                        : "User pending email verification"
+                }
+                arrow
+            >
+                <div
+                    className={`px-2 py-1 rounded-full dark:text-white ${params.value
+                        ? "bg-green-100 dark:bg-green-500 dark:bg-opacity-40"
+                        : "bg-red-100 dark:bg-red-500 dark:bg-opacity-40"}`}
+                >
+                    {params.value ? "Verified" : "Unverified"}
+                </div>
+            </Tooltip>
     },
     {
         field: "adminVerified",
-        headerName: "Verified",
+        headerName: "Admin Verification",
         width: 130,
         type: "boolean",
         renderCell: params =>
