@@ -119,7 +119,7 @@ const LoginSignupScreen = ({ login }: any) => {
                     role: "admin"
                 };
                 await axiosInstance.post("/users/signup", data);
-                toast.success("Account created successfully! Please login.");
+                toast.success("Account created successfully! Please check your email for verification link.");
                 setIsLoginMode(true);
             } catch (error: any) {
                 toast.error(
