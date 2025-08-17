@@ -119,7 +119,9 @@ const LoginSignupScreen = ({ login }: any) => {
                     role: "admin"
                 };
                 await axiosInstance.post("/users/signup", data);
-                toast.success("Account created successfully! Please check your email for verification link.");
+                toast.success("Account created successfully! Please check your email for verification link.",{
+                    duration: 8000, // Display for 8 seconds
+                });
                 setIsLoginMode(true);
             } catch (error: any) {
                 toast.error(
